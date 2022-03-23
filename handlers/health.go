@@ -10,7 +10,7 @@ import (
 // responses:
 //	200: healthResponse
 
-// CheckHealth checks the health of the service
+// CheckHealth handles the health status of the service
 func (h *Handler) CheckHealth(rw http.ResponseWriter, _ *http.Request) {
 	h.l.Println("[DEBUG] Handle GET CheckHealth")
 

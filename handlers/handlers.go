@@ -8,11 +8,11 @@ import (
 )
 
 type Handler struct {
-	l  *log.Logger
-	db data.Filter
+	l  *log.Logger // logger
+	db data.DB     // in-memory db
 }
 
-func NewHandler(l *log.Logger, f data.Filter) *Handler {
+func NewHandler(l *log.Logger, f data.DB) *Handler {
 	return &Handler{l, f}
 }
 
@@ -30,6 +30,7 @@ type GenericError struct {
 	Message string `json:"message"`
 }
 
+// ToJSON writes JSON encoded value to writer
 func ToJSON(i interface{}, w io.Writer) error {
 	return json.NewEncoder(w).Encode(i)
 }

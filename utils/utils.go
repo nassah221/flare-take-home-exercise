@@ -16,10 +16,13 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
+// RandomInt returns an integer between the min, max range inclusive
 func RandomInt(min, max int64) int64 {
 	return min + rand.Int63n(max-min+1) //nolint
 }
 
+// RandomStringValid returns a string of length n consisting a combination of alphanumeric characters
+// that is semantically valid for the /username endpoint and should pass the validation scheme
 func RandomStringValid(n int) string {
 	var sb strings.Builder
 	k := len(lowerCaseAlphabet)
@@ -50,6 +53,8 @@ func RandomStringValid(n int) string {
 	return sb.String()
 }
 
+// RandomStringInvalid returns a string of length n consisting a combination of alphanumeric characters
+// that is semantically invalid for the /username endpoint and should not pass validation scheme
 func RandomStringInvalid(n int) string {
 	var sb strings.Builder
 	k := len(lowerCaseAlphabet)

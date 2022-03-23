@@ -24,7 +24,7 @@ var invalidUsernameMsg = `Please make sure your username follows these rules
 //	  required: true
 //	  type: string
 
-// CheckUsername tests the in-memory bloom filter for supplied username
+// CheckUsername handles checking user availability
 func (h *Handler) CheckUsername(rw http.ResponseWriter, r *http.Request) {
 	h.l.Println("[DEBUG] Handle GET CheckUsername")
 	query := r.URL.Query().Get("q")

@@ -4,7 +4,7 @@ import (
 	"github.com/bits-and-blooms/bloom"
 )
 
-type Filter interface {
+type DB interface {
 	CheckUsername(string) bool
 	IsAlive() bool
 	AddEntry(string)
@@ -14,21 +14,20 @@ type db struct {
 	*bloom.BloomFilter
 }
 
-func NewDB() Filter {
+func NewDB() DB {
 	return &db{
 		bloom.NewWithEstimates(100000, 0.01),
 	}
 }
 
-// // Test
-// func init() {
-// 	filter.Add([]byte("nassah221"))
-// }
-
+// CheckUsername checks the given username against the db
+// returns true if it is found and false otherwise
 func (d *db) CheckUsername(username string) bool {
 	return d.Test([]byte(username))
 }
 
+// IsAlive returns true if the service is available and false otherwise
+// Normally this function would ping the service database connection
 func (d *db) IsAlive() bool {
 	// Normally implementing a health check would start with pinging
 	// any external services that our service might rely on
@@ -41,7 +40,8 @@ func (d *db) IsAlive() bool {
 	return d != nil
 }
 
-// For testing
+// AddEntry adds usernames to the in-memory db
+// so that it is much simpler to test with auto-generated data
 func (d *db) AddEntry(s string) {
 	d.Add([]byte(s))
 }
