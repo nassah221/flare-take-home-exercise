@@ -1,0 +1,79 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  GenericError:
+    properties:
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: flare/exercise/handlers
+  HealthResponse:
+    properties:
+      alive:
+        type: boolean
+        x-go-name: Alive
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: flare/exercise/handlers
+  UsernameResponse:
+    properties:
+      available:
+        type: boolean
+        x-go-name: Available
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: flare/exercise/handlers
+info:
+  description: Documentation for CheckUsername API
+  title: of CheckUsername API
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      description: Checks service availability
+      operationId: checkHealth
+      responses:
+        "200":
+          $ref: '#/responses/healthResponse'
+      tags:
+      - health
+  /username:
+    get:
+      description: Checks the supplied username for availability
+      operationId: checkUsername
+      parameters:
+      - in: query
+        name: query
+        required: true
+        type: string
+      responses:
+        "200":
+          $ref: '#/responses/usernameResponse'
+        "400":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - username
+produces:
+- application/json
+responses:
+  errorResponse:
+    description: Generic error message returned as a string
+    schema:
+      $ref: '#/definitions/GenericError'
+  healthResponse:
+    description: Response of the checkHealth endpoint
+    schema:
+      $ref: '#/definitions/HealthResponse'
+  usernameResponse:
+    description: Response of the checkUsername endpoint
+    schema:
+      $ref: '#/definitions/UsernameResponse'
+schemes:
+- http
+swagger: "2.0"
